@@ -11,18 +11,21 @@ type Executer interface {
 }
 
 type Testcase struct {
-	Start    time.Time
-	Testname string
-	Result   string
-	Duration int
+	starttime time.Time
+	Testname  string
+	Result    string
+	Duration  int
+	Reason    string
 }
 
-func (t *Testcase) Pass() {
+func (t *Testcase) Pass(reason string) {
 	t.Result = "PASS"
+	t.Reason = reason
 	Info(t.Testname, "PASSED")
 }
 
-func (t *Testcase) Fail() {
+func (t *Testcase) Fail(reason string) {
 	t.Result = "FAIL"
+	t.Reason = reason
 	Info(t.Testname, "FAILED")
 }

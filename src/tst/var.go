@@ -6,7 +6,7 @@ import (
 
 var Env env.Env
 
-var atcion map[string]string = map[string]string{
+var action map[string]string = map[string]string{
 	"register":        "/agbweb/client/customer/info/register",
 	"infomodify":      "/agbweb/client/customer/info/modify",
 	"bankmodify":      "/agbweb/client/customer/bank/modify",
