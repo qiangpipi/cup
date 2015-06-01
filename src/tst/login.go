@@ -41,9 +41,10 @@ func (ln *LoginNormal) Execute() {
 	Debug(url)
 	res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 	if err != nil {
-		ln.tc.Fail(err.Error())
+		ln.tc.Fail(err.Error() + "\n" + res)
 	}
 	//Res parse
+	Debug(res)
 	if strings.Contains(res, "\"code\":\"000\"") {
 		Debug(res)
 		////////////////////////
@@ -56,8 +57,9 @@ func (ln *LoginNormal) Execute() {
 		res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 		//Res parse
 		if err != nil {
-			ln.tc.Fail(err.Error())
+			ln.tc.Fail(err.Error() + "\n" + res)
 		}
+		Debug(res)
 		if strings.Contains(res, "\"code\":\"000\"") {
 			Debug(res)
 			//Set ln.jsid
@@ -76,10 +78,10 @@ func (ln *LoginNormal) Execute() {
 			res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 			//Res parse
 			if err != nil {
-				ln.tc.Fail(err.Error())
+				ln.tc.Fail(err.Error() + "\n" + res)
 			}
+			Debug(res)
 			if strings.Contains(res, "\"code\":\"000\"") {
-				Debug(res)
 				ln.tc.Pass("")
 			} else {
 				ln.tc.Fail("Wrong code number for logout fail")
@@ -125,8 +127,9 @@ func (lwr *LoginWithoutReg) Execute() {
 	res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 	//Parse
 	if err != nil {
-		lwr.tc.Fail(err.Error())
+		lwr.tc.Fail(err.Error() + "\n" + res)
 	}
+	Debug(res)
 	if strings.Contains(res, "\"code\":\"035\"") {
 		lwr.tc.Pass("")
 	} else {

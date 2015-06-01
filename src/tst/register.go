@@ -37,11 +37,11 @@ func (rn *RegisterNormal) Execute() {
 	Debug(url)
 	res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 	if err != nil {
-		rn.tc.Fail(err.Error())
+		rn.tc.Fail(err.Error() + "\n" + res)
 	}
 	//Res parse
+	Debug(res)
 	if strings.Contains(res, "\"code\":\"000\"") {
-		Debug(res)
 		rn.tc.Pass("")
 	} else {
 		rn.tc.Fail("Wrong code num and register fail")
@@ -79,9 +79,10 @@ func (re *RegisterExisting) Execute() {
 	Debug(url)
 	res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 	if err != nil {
-		re.tc.Fail(err.Error())
+		re.tc.Fail(err.Error() + "\n" + res)
 	}
 	//Res parse
+	Debug(res)
 	if strings.Contains(res, "\"code\":\"000\"") {
 		Debug(res)
 		//////////////////////////
@@ -89,8 +90,9 @@ func (re *RegisterExisting) Execute() {
 		/////////////////////////
 		res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 		if err != nil {
-			re.tc.Fail(err.Error())
+			re.tc.Fail(err.Error() + "\n" + res)
 		}
+		Debug(res)
 		if strings.Contains(res, "\"code\":\"030\"") {
 			re.tc.Pass("")
 		} else {
@@ -132,11 +134,11 @@ func (rnu *RegisterNulUsername) Execute() {
 	Debug(url)
 	res, err := httpreq(Env.ServerIp1, Env.ServerPort1, url)
 	if err != nil {
-		rnu.tc.Fail(err.Error())
+		rnu.tc.Fail(err.Error() + "\n" + res)
 	}
 	//Res parse
+	Debug(res)
 	if strings.Contains(res, "\"code\":\"031\"") {
-		Debug(res)
 		rnu.tc.Pass("")
 	} else {
 		rnu.tc.Fail("Wrong code num and register fail")
