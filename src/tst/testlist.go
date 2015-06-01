@@ -2,4 +2,9 @@ package tst
 
 import ()
 
-var Testlist []Executer = []Executer{&LoginNormal{}}
+var Testlist []Executer = []Executer{
+	&RegisterNormal{},
+	&LoginNormal{},
+	&RegisterExisting{},
+	&LoginWithoutReg{},
+}

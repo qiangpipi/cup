@@ -14,7 +14,7 @@ type Testcase struct {
 	starttime time.Time
 	Testname  string
 	Result    string
-	Duration  int
+	Duration  float64
 	Reason    string
 }
 
