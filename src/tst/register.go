@@ -2,6 +2,7 @@ package tst
 
 import (
 	. "loger"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -46,6 +47,8 @@ func (rn *RegisterNormal) Execute() {
 	} else {
 		rn.tc.Fail("Wrong code num and register fail")
 	}
+	rn.tc.Duration = time.Since(rn.tc.starttime).Seconds()
+	Info("RegisterNormal took " + strconv.FormatFloat(rn.tc.Duration, 'f', -1, 64) + " seconds")
 }
 
 type RegisterExisting struct {
@@ -58,7 +61,7 @@ type RegisterExisting struct {
 }
 
 func (re *RegisterExisting) Init() {
-	Info("Register normal initing")
+	Info("Register existing initing")
 	re.name = CreateTestAccount()
 	re.actionSimpleReg = action["register"]
 	re.pwd = "111111"
@@ -69,7 +72,7 @@ func (re *RegisterExisting) Init() {
 }
 
 func (re *RegisterExisting) Execute() {
-	Info("Register normal executing")
+	Info("Register existing executing")
 	//////////////////////////
 	//Simple register account
 	/////////////////////////
@@ -84,7 +87,6 @@ func (re *RegisterExisting) Execute() {
 	//Res parse
 	Debug(res)
 	if strings.Contains(res, "\"code\":\"000\"") {
-		Debug(res)
 		//////////////////////////
 		//Register account again
 		/////////////////////////
@@ -101,6 +103,8 @@ func (re *RegisterExisting) Execute() {
 	} else {
 		re.tc.Fail("Wrong code num and register fail")
 	}
+	re.tc.Duration = time.Since(re.tc.starttime).Seconds()
+	Info("RegisterExisting took " + strconv.FormatFloat(re.tc.Duration, 'f', -1, 64) + " seconds")
 }
 
 type RegisterNulUsername struct {
@@ -113,7 +117,7 @@ type RegisterNulUsername struct {
 }
 
 func (rnu *RegisterNulUsername) Init() {
-	Info("Register normal initing")
+	Info("Register null username initing")
 	rnu.name = ""
 	rnu.actionSimpleReg = action["register"]
 	rnu.pwd = "111111"
@@ -124,7 +128,7 @@ func (rnu *RegisterNulUsername) Init() {
 }
 
 func (rnu *RegisterNulUsername) Execute() {
-	Info("Register normal executing")
+	Info("Register null username executing")
 	//////////////////////////
 	//Simple register account
 	/////////////////////////
@@ -143,4 +147,6 @@ func (rnu *RegisterNulUsername) Execute() {
 	} else {
 		rnu.tc.Fail("Wrong code num and register fail")
 	}
+	rnu.tc.Duration = time.Since(rnu.tc.starttime).Seconds()
+	Info("RegisterNulUsername took " + strconv.FormatFloat(rnu.tc.Duration, 'f', -1, 64) + " seconds")
 }

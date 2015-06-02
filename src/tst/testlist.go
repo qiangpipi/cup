@@ -4,7 +4,8 @@ import ()
 
 var Testlist []Executer = []Executer{
 	&RegisterNormal{},
-	&LoginNormal{},
 	&RegisterExisting{},
+	&RegisterNulUsername{},
+	&LoginNormal{},
 	&LoginWithoutReg{},
 }

@@ -2,6 +2,7 @@ package tst
 
 import (
 	. "loger"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -46,7 +47,6 @@ func (ln *LoginNormal) Execute() {
 	//Res parse
 	Debug(res)
 	if strings.Contains(res, "\"code\":\"000\"") {
-		Debug(res)
 		////////////////////////
 		//Login with account
 		////////////////////////
@@ -61,7 +61,6 @@ func (ln *LoginNormal) Execute() {
 		}
 		Debug(res)
 		if strings.Contains(res, "\"code\":\"000\"") {
-			Debug(res)
 			//Set ln.jsid
 			for _, s := range strings.Split(res, ",") {
 				if strings.Contains(s, "jsessionid") {
@@ -80,7 +79,6 @@ func (ln *LoginNormal) Execute() {
 			if err != nil {
 				ln.tc.Fail(err.Error() + "\n" + res)
 			}
-			Debug(res)
 			if strings.Contains(res, "\"code\":\"000\"") {
 				ln.tc.Pass("")
 			} else {
@@ -93,6 +91,7 @@ func (ln *LoginNormal) Execute() {
 		ln.tc.Fail("Wrong code number for simple register fail")
 	}
 	ln.tc.Duration = time.Since(ln.tc.starttime).Seconds()
+	Info("LoginNormal took " + strconv.FormatFloat(ln.tc.Duration, 'f', -1, 64) + " seconds")
 }
 
 type LoginWithoutReg struct {
@@ -114,13 +113,14 @@ func (lwr *LoginWithoutReg) Init() {
 	lwr.pwd = "111111"
 	lwr.valid_code = "111111"
 	lwr.jsid = ""
+	lwr.tc.starttime = time.Now()
 }
 
 func (lwr *LoginWithoutReg) Execute() {
 	/////////////////////////////////////
 	//Login in with account non-existing
 	/////////////////////////////////////
-	url := baseUrl(lwr.actionLogout, lwr.jsid)
+	url := baseUrl(lwr.actionLogin, lwr.jsid)
 	params := "name=" + lwr.name + "&pwd=" + lwr.pwd
 	url += params
 	Debug(url)
@@ -135,4 +135,6 @@ func (lwr *LoginWithoutReg) Execute() {
 	} else {
 		lwr.tc.Fail("Wrong code number for login without register")
 	}
+	lwr.tc.Duration = time.Since(lwr.tc.starttime).Seconds()
+	Info("LoginWithoutReg took " + strconv.FormatFloat(lwr.tc.Duration, 'f', -1, 64) + " seconds")
 }
